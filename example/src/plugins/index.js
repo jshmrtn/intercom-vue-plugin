@@ -82,9 +82,17 @@ export default {
           await this.isReady();
           this.callIntercom('show');
         },
+        async onShow(callback) {
+          await this.isReady();
+          this.callIntercom('onShow', callback);
+        },
         async hide() {
           await this.isReady();
           this.callIntercom('hide');
+        },
+        async onHide(callback) {
+          await this.isReady();
+          this.callIntercom('onHide', callback);
         },
         async showMessages() {
           await this.isReady();

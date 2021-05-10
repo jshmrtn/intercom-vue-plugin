@@ -59,7 +59,7 @@ npm run serve
 
 #### `$intercom.ready`
 
-Set to `true` once the Intercom script has been loaded.
+Set to `true` once the Intercom script has been loaded. There is no need to wait for this property, the plugin watches this internally and will only pass user calls to methods and properties to Intercom once this is `true`. 
 
 #### `$intercom.visible`
 
@@ -105,10 +105,18 @@ Calls `Intercom('trackEvent')` with extra metadata if provided.
 
 #### `$intercom.getVisitorId()`
 
-Calls `Intercom('getVisitorId')`.
+Calls `Intercom('getVisitorId')`
+
+#### `$intercom.getVisitorId()`
+
+Calls `Intercom('getVisitorId')`
+
+#### `$intercom.startTour()`
+
+Calls `Intercom('startTour')`
 
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2017 Continuon
+Copyright (c) 2021 Leadent Digital

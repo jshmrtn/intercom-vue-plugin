@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import App from './App.vue';
-import VueJsIntercom from './plugins';
+import VueIntercomPlugin from './plugins';
 import Index from './views/Index.vue';
 import Two from './views/Two.vue';
 
 Vue.use(VueRouter);
-Vue.use(VueJsIntercom, {
+Vue.use(VueIntercomPlugin, {
   app_id: process.env.VUE_APP_INTERCOM_ID,
 });
 

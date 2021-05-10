@@ -9,7 +9,7 @@ export default {
   name: 'App',
   watch: {
     $route() {
-      // this.$intercom.hide();
+      this.$intercom.hide();
     },
   },
   mounted() {
@@ -21,6 +21,12 @@ export default {
       action_color: '#41B883',
     });
     this.$intercom.show();
+    this.$intercom.onHide(()=>{
+      console.warn('Intercom hidden. visible = ', this.$intercom.visible);
+    });
+    this.$intercom.onShow(()=>{
+      console.warn('Intercom visible. visible = ', this.$intercom.visible);
+    });
   },
 };
 </script>
