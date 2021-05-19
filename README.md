@@ -1,4 +1,4 @@
-# vue-intercom
+# intercom.com Vue.js Plugin
 
 A reactive wrapper for [Intercom's](https://www.intercom.com/) [JavaScript API](https://developers.intercom.com/docs/intercom-javascript)
 
@@ -11,11 +11,11 @@ npm install intercom-vue-plugin
 In src/main.js 
 ```javascript
 import Vue from 'vue';
-import VueIntercom from 'vue-intercom';
+import IntercomVuePlugin from '@leadent/intercom-vue-plugin';
 
-Vue.use(VueIntercom, { appId: 'your-app-id' });
+Vue.use(IntercomVuePlugin, { app_id: 'your-app-id' });
 ```
-
+Note: Option parameters can be set when initalising the plugin (as above) or when booting the plugin (as below) which will override any initial options settings.
 ## Usage
 
 `intercom-vue-plugin` handles the injection of Intercom's script into your html and wraps calls to the Intercom API with methods and exposes them through the `$intercom` object in your components.

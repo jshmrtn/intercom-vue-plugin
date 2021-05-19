@@ -1,0 +1,35 @@
+{
+  "name": "@leadent/intercom-vue-plugin",
+  "version": "1.0.0",
+  "description": "intercom.com Vue.js plugin",
+  "main": "src/index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leadent/intercom-vue-plugin.git"
+  },
+  "keywords": [
+    "intercom.com",
+    "intercom.io",
+    "Vue",
+    "Vue.js"
+  ],
+  "author": "Ben Gooding",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Leadent/intercom-vue-plugin/issues"
+  },
+  "homepage": "https://github.com/Leadent/intercom-vue-plugin#readme",
+  "devDependencies": {
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "vue": "^2.6.12"
+  }
+}
