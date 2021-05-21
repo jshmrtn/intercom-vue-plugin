@@ -1,3 +1,6 @@
+// @ts-ignore
+// @ts-ignore
+
 import { PluginObject } from "vue";
 
 type messengerAttributes = {
@@ -6,7 +9,7 @@ type messengerAttributes = {
   alignment?: string;
   vertical_padding?: number;
   horizontal_padding?: number;
-  hide_default_launcher?: number;
+  hide_default_launcher?: boolean;
   session_duration?: number;
   action_color?: string;
   background_color?: string;
@@ -31,6 +34,7 @@ type messengerAttributes = {
   user_hash?: string;
   company?: company;
   companies?: company[];
+  [key: string]: any;
 };
 
 type company = {
@@ -62,9 +66,9 @@ type Intercom = {
   installed: boolean;
   unreadCount: number;
   init(): void;
-  boot(): void;
+  boot(options: messengerAttributes): void;
   shutdown(): void;
-  update(): void;
+  update(options: messengerAttributes): void;
   show(): void;
   onShow(fn: () => void): void;
   hide(): void;
@@ -83,6 +87,7 @@ declare global {
   }
 }
 
+// @ts-ignore
 declare module "vue/types/vue" {
   interface Vue {
     $intercom: Intercom;

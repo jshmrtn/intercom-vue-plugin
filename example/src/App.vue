@@ -14,7 +14,7 @@ export default {
   },
   mounted() {
     this.$intercom.boot({
-      userId: 1,
+      user_id: '1',
       name: 'Test User',
       email: 'test@user.com',
       background_color: '#35495E',

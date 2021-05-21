@@ -5,7 +5,7 @@ declare type messengerAttributes = {
     alignment?: string;
     vertical_padding?: number;
     horizontal_padding?: number;
-    hide_default_launcher?: number;
+    hide_default_launcher?: boolean;
     session_duration?: number;
     action_color?: string;
     background_color?: string;
@@ -29,6 +29,7 @@ declare type messengerAttributes = {
     user_hash?: string;
     company?: company;
     companies?: company[];
+    [key: string]: any;
 };
 declare type company = {
     type?: string;
@@ -58,9 +59,9 @@ declare type Intercom = {
     installed: boolean;
     unreadCount: number;
     init(): void;
-    boot(): void;
+    boot(options: messengerAttributes): void;
     shutdown(): void;
-    update(): void;
+    update(options: messengerAttributes): void;
     show(): void;
     onShow(fn: () => void): void;
     hide(): void;

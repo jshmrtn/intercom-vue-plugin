@@ -49,7 +49,7 @@ new Vue({
 ## Example App
 
 ```
-cd example
+cd example/
 npm run serve
 ```
 
