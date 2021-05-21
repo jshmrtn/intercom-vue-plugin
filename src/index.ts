@@ -1,6 +1,3 @@
-// @ts-ignore
-// @ts-ignore
-
 import { PluginObject } from "vue";
 
 type messengerAttributes = {

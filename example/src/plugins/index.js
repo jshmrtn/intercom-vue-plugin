@@ -1,6 +1,4 @@
 "use strict";
-// @ts-ignore
-// @ts-ignore
 Object.defineProperty(exports, "__esModule", { value: true });
 const intercomVuePlugin = {
     install: (Vue, settings) => {
