@@ -1,6 +1,6 @@
 import { PluginObject } from "vue";
 declare type messengerAttributes = {
-    app_id: string;
+    app_id?: string;
     custom_launcher_selector?: string;
     alignment?: string;
     vertical_padding?: number;

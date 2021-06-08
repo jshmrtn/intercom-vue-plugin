@@ -58,7 +58,7 @@ const intercomVuePlugin = {
                 },
                 async boot(options) {
                     await this.isReady();
-                    if (!options.app_id) {
+                    if (!options?.app_id) {
                         // @ts-ignore
                         options.app_id = settings.app_id;
                     }

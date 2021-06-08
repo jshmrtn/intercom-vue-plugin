@@ -1,7 +1,7 @@
 import { PluginObject } from "vue";
 
 type messengerAttributes = {
-  app_id: string;
+  app_id?: string;
   custom_launcher_selector?: string;
   alignment?: string;
   vertical_padding?: number;
@@ -151,7 +151,7 @@ const intercomVuePlugin: PluginObject<messengerAttributes> = {
         },
         async boot(options: messengerAttributes) {
           await this.isReady();
-          if (!options.app_id) {
+          if (!options?.app_id) {
             // @ts-ignore
             options.app_id = settings.app_id;
           }
