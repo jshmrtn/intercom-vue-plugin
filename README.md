@@ -49,6 +49,7 @@ new Vue({
 ## Example App
 
 ```
+npm run build
 cd example/
 npm run serve
 ```
