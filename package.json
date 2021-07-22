@@ -26,9 +26,10 @@
   },
   "homepage": "https://github.com/Leadent/intercom-vue-plugin#readme",
   "devDependencies": {
-    "typescript": "^4.2.4"
-  },
-  "dependencies": {
+    "typescript": "^4.2.4",
     "vue": "^3.1.5"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
   }
 }
