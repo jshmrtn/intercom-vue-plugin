@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.useIntercom = void 0;
 const vue_1 = require("vue");
 const intercomSetup = (settings) => {
     const installed = vue_1.ref(false);
@@ -125,9 +126,15 @@ const intercomSetup = (settings) => {
         startTour,
     };
 };
+const intercomSymbol = Symbol("Intercom");
+const useIntercom = () => {
+    return vue_1.inject(intercomSymbol);
+};
+exports.useIntercom = useIntercom;
 const intercomPlugin = {
     install: (app, settings) => {
         const intercom = intercomSetup(settings);
+        vue_1.provide(intercomSymbol, intercom);
         app.config.globalProperties.$intercom = intercom;
         app.mixin({
             created() {

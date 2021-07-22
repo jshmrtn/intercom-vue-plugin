@@ -1,4 +1,4 @@
-import { App } from "vue";
+import { Plugin } from "vue";
 declare type messengerAttributes = {
     app_id?: string;
     custom_launcher_selector?: string;
@@ -81,12 +81,33 @@ declare const intercomSetup: (settings: messengerAttributes) => {
     getVisitorId: () => Promise<void>;
     startTour: (tourId: number) => Promise<void>;
 };
+declare type Intercom = ReturnType<typeof intercomSetup>;
 declare module "@vue/runtime-core" {
     interface ComponentCustomProperties {
-        $intercom: ReturnType<typeof intercomSetup>;
+        $intercom: Intercom;
     }
 }
-declare const intercomPlugin: {
-    install: (app: App, settings: messengerAttributes) => void;
+export declare const useIntercom: () => {
+    installed: import("vue").Ref<boolean>;
+    ready: import("vue").Ref<boolean>;
+    visible: import("vue").Ref<boolean>;
+    unreadCount: import("vue").Ref<number>;
+    loadScript: () => void;
+    init: () => void;
+    callIntercom: (...args: any[]) => void;
+    isReady: () => Promise<unknown>;
+    boot: (options: messengerAttributes) => Promise<void>;
+    shutdown: () => Promise<void>;
+    update: (options: messengerAttributes) => Promise<void>;
+    show: () => Promise<void>;
+    onShow: (callback: () => void) => Promise<void>;
+    hide: () => Promise<void>;
+    onHide: (callback: () => void) => Promise<void>;
+    showMessages: () => Promise<void>;
+    showNewMessage: (content: string) => Promise<void>;
+    trackEvent: (name: string, ...metadata: any[]) => Promise<void>;
+    getVisitorId: () => Promise<void>;
+    startTour: (tourId: number) => Promise<void>;
 };
+declare const intercomPlugin: Plugin;
 export default intercomPlugin;

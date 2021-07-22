@@ -1,4 +1,4 @@
-import { App, ref } from "vue";
+import { ref, Plugin, provide, inject } from "vue";
 
 type messengerAttributes = {
   app_id?: string;
@@ -201,16 +201,26 @@ const intercomSetup = (settings: messengerAttributes) => {
   };
 };
 
+type Intercom = ReturnType<typeof intercomSetup>;
+
 // @ts-ignore
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
-    $intercom: ReturnType<typeof intercomSetup>;
+    $intercom: Intercom;
   }
 }
 
-const intercomPlugin = {
-  install: (app: App, settings: messengerAttributes) => {
+const intercomSymbol = Symbol("Intercom");
+
+export const useIntercom = () => {
+  return inject(intercomSymbol) as Intercom;
+};
+
+const intercomPlugin: Plugin = {
+  install: (app, settings: messengerAttributes) => {
     const intercom = intercomSetup(settings);
+
+    provide(intercomSymbol, intercom);
 
     app.config.globalProperties.$intercom = intercom;
 
