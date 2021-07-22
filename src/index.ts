@@ -1,4 +1,4 @@
-import { ref, Plugin, provide, inject } from "vue";
+import { ref, Plugin, inject } from "vue";
 
 type messengerAttributes = {
   app_id?: string;
@@ -220,7 +220,7 @@ const intercomPlugin: Plugin = {
   install: (app, settings: messengerAttributes) => {
     const intercom = intercomSetup(settings);
 
-    provide(intercomSymbol, intercom);
+    app.provide(intercomSymbol, intercom);
 
     app.config.globalProperties.$intercom = intercom;
 
