@@ -134,7 +134,7 @@ exports.useIntercom = useIntercom;
 const intercomPlugin = {
     install: (app, settings) => {
         const intercom = intercomSetup(settings);
-        vue_1.provide(intercomSymbol, intercom);
+        app.provide(intercomSymbol, intercom);
         app.config.globalProperties.$intercom = intercom;
         app.mixin({
             created() {
