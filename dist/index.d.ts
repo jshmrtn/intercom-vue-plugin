@@ -70,7 +70,7 @@ declare const intercomSetup: (settings: messengerAttributes) => {
     isReady: () => Promise<unknown>;
     boot: (options: messengerAttributes) => Promise<void>;
     shutdown: () => Promise<void>;
-    update: (options: messengerAttributes) => Promise<void>;
+    update: (options?: messengerAttributes | undefined) => Promise<void>;
     show: () => Promise<void>;
     onShow: (callback: () => void) => Promise<void>;
     hide: () => Promise<void>;
@@ -98,7 +98,7 @@ export declare const useIntercom: () => {
     isReady: () => Promise<unknown>;
     boot: (options: messengerAttributes) => Promise<void>;
     shutdown: () => Promise<void>;
-    update: (options: messengerAttributes) => Promise<void>;
+    update: (options?: messengerAttributes | undefined) => Promise<void>;
     show: () => Promise<void>;
     onShow: (callback: () => void) => Promise<void>;
     hide: () => Promise<void>;

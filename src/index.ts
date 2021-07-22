@@ -126,8 +126,7 @@ const intercomSetup = (settings: messengerAttributes) => {
     callIntercom("shutdown");
   };
 
-  const update = async (options: messengerAttributes) => {
-    //TODO is this correct? we were using deconstruct, but I think that was wrong. Needs testing
+  const update = async (options?: messengerAttributes) => {
     await isReady();
     callIntercom("update", options);
   };

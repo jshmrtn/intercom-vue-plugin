@@ -63,7 +63,6 @@ const intercomSetup = (settings) => {
         callIntercom("shutdown");
     };
     const update = async (options) => {
-        //TODO is this correct? we were using deconstruct, but I think that was wrong. Needs testing
         await isReady();
         callIntercom("update", options);
     };
