@@ -1,25 +1,5 @@
-# example
+# Run the example
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-Add your intercom app_id in the .env file
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- `npm install`
+- Set the env variable `VUE_APP_INTERCOM_ID` in the `.env`-file to you intercom id
+- `npm run dev`

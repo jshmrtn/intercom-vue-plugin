@@ -1,125 +1,138 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const intercomVuePlugin = {
-    install: (Vue, settings) => {
-        const intercom = new Vue({
-            data() {
-                return {
-                    installed: false,
-                    ready: false,
-                    visible: false,
-                    unreadCount: 0,
-                };
-            },
-            methods: {
-                loadScript() {
-                    const script = document.createElement("script");
-                    script.async = true;
-                    if (settings && settings.app_id) {
-                        script.src = `https://widget.intercom.io/widget/${settings.app_id}`;
-                        const firstScript = document.getElementsByTagName("script")[0];
-                        if (firstScript.parentNode)
-                            firstScript.parentNode.insertBefore(script, firstScript);
-                        else
-                            throw new Error("Could not add Intercom source code to page");
-                        script.onload = () => this.$intercom.init();
+const vue_1 = require("vue");
+const intercomSetup = (settings) => {
+    const installed = vue_1.ref(false);
+    const ready = vue_1.ref(false);
+    const visible = vue_1.ref(false);
+    const unreadCount = vue_1.ref(0);
+    const loadScript = () => {
+        const script = document.createElement("script");
+        script.async = true;
+        if (settings && settings.app_id) {
+            script.src = `https://widget.intercom.io/widget/${settings.app_id}`;
+            const firstScript = document.getElementsByTagName("script")[0];
+            if (firstScript.parentNode)
+                firstScript.parentNode.insertBefore(script, firstScript);
+            else
+                throw new Error("Could not add Intercom source code to page");
+            script.onload = () => init();
+        }
+        else {
+            throw new Error("Missing Intercom app_id");
+        }
+    };
+    const init = () => {
+        callIntercom("onHide", () => (visible.value = false));
+        callIntercom("onShow", () => (visible.value = true));
+        callIntercom("onUnreadCountChange", (newUnreadCount) => (unreadCount.value = newUnreadCount));
+        window.intercomSettings = { ...settings };
+        ready.value = true;
+    };
+    const callIntercom = (...args) => {
+        window.Intercom(...args);
+    };
+    const isReady = () => {
+        return new Promise((resolve, _reject) => {
+            if (ready.value) {
+                resolve(true);
+            }
+            else {
+                setTimeout(async () => {
+                    if (ready.value) {
+                        resolve(true);
                     }
                     else {
-                        throw new Error("Missing Intercom app_id");
+                        await isReady();
+                        resolve(true);
                     }
-                },
-                init() {
-                    this.callIntercom("onHide", () => (this.$intercom.visible = false));
-                    this.callIntercom("onShow", () => (this.$intercom.visible = true));
-                    this.callIntercom("onUnreadCountChange", (unreadCount) => (this.unreadCount = unreadCount));
-                    window.intercomSettings = { ...settings };
-                    this.$intercom.ready = true;
-                },
-                callIntercom(...args) {
-                    window.Intercom(...args);
-                },
-                isReady() {
-                    return new Promise((resolve, reject) => {
-                        if (this.$intercom.ready) {
-                            resolve(true);
-                        }
-                        else {
-                            setTimeout(async () => {
-                                if (this.$intercom.ready) {
-                                    resolve(true);
-                                }
-                                else {
-                                    await this.isReady();
-                                    resolve(true);
-                                }
-                            }, 100);
-                        }
-                    });
-                },
-                async boot(options) {
-                    await this.isReady();
-                    if (!options?.app_id) {
-                        // @ts-ignore
-                        options.app_id = settings.app_id;
-                    }
-                    this.callIntercom("boot", options);
-                },
-                async shutdown() {
-                    await this.isReady();
-                    this.callIntercom("shutdown");
-                },
-                async update(options) {
-                    //TODO is this correct? we were using deconstruct, but I think that was wrong. Needs testing
-                    await this.isReady();
-                    this.callIntercom("update", options);
-                },
-                async show() {
-                    await this.isReady();
-                    this.callIntercom("show");
-                },
-                async onShow(callback) {
-                    await this.isReady();
-                    this.callIntercom("onShow", callback);
-                },
-                async hide() {
-                    await this.isReady();
-                    this.callIntercom("hide");
-                },
-                async onHide(callback) {
-                    await this.isReady();
-                    this.callIntercom("onHide", callback);
-                },
-                async showMessages() {
-                    await this.isReady();
-                    this.callIntercom("showMessages");
-                },
-                async showNewMessage(content) {
-                    await this.isReady();
-                    this.callIntercom("showNewMessage", typeof content === "string" ? content : "");
-                },
-                async trackEvent(name, ...metadata) {
-                    await this.isReady();
-                    this.callIntercom("trackEvent", ...[name, ...metadata]);
-                },
-                async getVisitorId() {
-                    await this.isReady();
-                    this.callIntercom("getVisitorId");
-                },
-                async startTour(tourId) {
-                    await this.isReady();
-                    this.callIntercom("startTour", tourId);
-                },
-            },
+                }, 100);
+            }
         });
-        Object.defineProperty(Vue.prototype, "$intercom", {
-            get: () => intercom,
-        });
-        Vue.mixin({
+    };
+    const boot = async (options) => {
+        await isReady();
+        if (!options?.app_id) {
+            options.app_id = settings.app_id;
+        }
+        callIntercom("boot", options);
+    };
+    const shutdown = async () => {
+        await isReady();
+        callIntercom("shutdown");
+    };
+    const update = async (options) => {
+        //TODO is this correct? we were using deconstruct, but I think that was wrong. Needs testing
+        await isReady();
+        callIntercom("update", options);
+    };
+    const show = async () => {
+        await isReady();
+        callIntercom("show");
+    };
+    const onShow = async (callback) => {
+        await isReady();
+        callIntercom("onShow", callback);
+    };
+    const hide = async () => {
+        await isReady();
+        callIntercom("hide");
+    };
+    const onHide = async (callback) => {
+        await isReady();
+        callIntercom("onHide", callback);
+    };
+    const showMessages = async () => {
+        await isReady();
+        callIntercom("showMessages");
+    };
+    const showNewMessage = async (content) => {
+        await isReady();
+        callIntercom("showNewMessage", typeof content === "string" ? content : "");
+    };
+    const trackEvent = async (name, ...metadata) => {
+        await isReady();
+        callIntercom("trackEvent", ...[name, ...metadata]);
+    };
+    const getVisitorId = async () => {
+        await isReady();
+        callIntercom("getVisitorId");
+    };
+    const startTour = async (tourId) => {
+        await isReady();
+        callIntercom("startTour", tourId);
+    };
+    return {
+        installed,
+        ready,
+        visible,
+        unreadCount,
+        loadScript,
+        init,
+        callIntercom,
+        isReady,
+        boot,
+        shutdown,
+        update,
+        show,
+        onShow,
+        hide,
+        onHide,
+        showMessages,
+        showNewMessage,
+        trackEvent,
+        getVisitorId,
+        startTour,
+    };
+};
+const intercomPlugin = {
+    install: (app, settings) => {
+        const intercom = intercomSetup(settings);
+        app.config.globalProperties.$intercom = intercom;
+        app.mixin({
             created() {
-                // @ts-ignore
-                if (!this.$intercom.installed) {
-                    // @ts-ignore
-                    const loaded = () => this.$intercom.loadScript();
+                if (!intercom.installed.value) {
+                    const loaded = () => intercom.loadScript();
                     if (document.readyState === "complete") {
                         loaded();
                     }
@@ -131,11 +144,10 @@ const intercomVuePlugin = {
                     else {
                         window.addEventListener("load", loaded, false);
                     }
-                    // @ts-ignore
-                    this.$intercom.installed = true;
+                    intercom.installed.value = true;
                 }
             },
         });
     },
 };
-exports.default = intercomVuePlugin;
+exports.default = intercomPlugin;

@@ -1,4 +1,4 @@
-import { PluginObject } from "vue";
+import { App } from "vue";
 declare type messengerAttributes = {
     app_id?: string;
     custom_launcher_selector?: string;
@@ -53,38 +53,40 @@ declare type company = {
     website?: string;
     industry?: string;
 };
-declare type Intercom = {
-    visible: boolean;
-    ready: boolean;
-    installed: boolean;
-    unreadCount: number;
-    init(): void;
-    boot(options: messengerAttributes): void;
-    shutdown(): void;
-    update(options: messengerAttributes): void;
-    show(): void;
-    onShow(fn: () => void): void;
-    hide(): void;
-    onHide(fn: () => void): void;
-    showMessages(): void;
-    showNewMessage(): void;
-    trackEvent(): void;
-    getVisitorId(): void;
-    startTour(): void;
-};
 declare global {
     interface Window {
         intercomSettings: any;
         Intercom: any;
     }
 }
-declare module "vue/types/vue" {
-    interface Vue {
-        $intercom: Intercom;
-    }
-    interface VueConstructor {
-        $intercom: Intercom;
+declare const intercomSetup: (settings: messengerAttributes) => {
+    installed: import("vue").Ref<boolean>;
+    ready: import("vue").Ref<boolean>;
+    visible: import("vue").Ref<boolean>;
+    unreadCount: import("vue").Ref<number>;
+    loadScript: () => void;
+    init: () => void;
+    callIntercom: (...args: any[]) => void;
+    isReady: () => Promise<unknown>;
+    boot: (options: messengerAttributes) => Promise<void>;
+    shutdown: () => Promise<void>;
+    update: (options: messengerAttributes) => Promise<void>;
+    show: () => Promise<void>;
+    onShow: (callback: () => void) => Promise<void>;
+    hide: () => Promise<void>;
+    onHide: (callback: () => void) => Promise<void>;
+    showMessages: () => Promise<void>;
+    showNewMessage: (content: string) => Promise<void>;
+    trackEvent: (name: string, ...metadata: any[]) => Promise<void>;
+    getVisitorId: () => Promise<void>;
+    startTour: (tourId: number) => Promise<void>;
+};
+declare module "@vue/runtime-core" {
+    interface ComponentCustomProperties {
+        $intercom: ReturnType<typeof intercomSetup>;
     }
 }
-declare const intercomVuePlugin: PluginObject<messengerAttributes>;
-export default intercomVuePlugin;
+declare const intercomPlugin: {
+    install: (app: App, settings: messengerAttributes) => void;
+};
+export default intercomPlugin;
